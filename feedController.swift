@@ -23,12 +23,13 @@ class feedController : UIViewController,UITableViewDelegate,UITableViewDataSourc
         feedOutlet.delegate = self
         super.viewDidLoad()
         //convert2()
-        //print(counter)
+        //print("counter")
        // counter = 0
         //countThreads()
     }
     var k = Int()
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //tableView.reloadData()
         return threads[threadNames[section]]!.count
         
         //return 6
@@ -36,9 +37,16 @@ class feedController : UIViewController,UITableViewDelegate,UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let temp = tableView.dequeueReusableCell(withIdentifier: "feedCell", for: indexPath) as? feedCell
-        temp?.snapStatus.image = UIImage(named: "unread")
+        if temp?.read == true{
+        temp?.snapStatus.image = UIImage(named:
+            "read")} else {
+            temp?.snapStatus.image = UIImage(named:
+                "unread")
+        }
+        temp?.read = false
         temp?.snapAgeLabel.text = "Sent by Aleem Zaki"
         temp?.senderNameLabel.text = "6 minutes ago"
+        //temp?.read = true
         return temp!
         
     }
@@ -90,11 +98,12 @@ class feedController : UIViewController,UITableViewDelegate,UITableViewDataSourc
             }
             i = i + 1
         }
-        
+        let temp = tableView.dequeueReusableCell(withIdentifier: "feedCell", for: indexPath) as? feedCell
+        temp?.read = true
         
         //indexPath.section
         //performSegue(withIdentifier: "filemenuToFeed", sender: nil)
-        tempImage = (threads[feedName]?[0])!
+        tempImage = (threads[feedName]?[indexPath.row])!
         performSegue(withIdentifier: "feedToSnap", sender: nil)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
@@ -102,6 +111,7 @@ class feedController : UIViewController,UITableViewDelegate,UITableViewDataSourc
         if segue.identifier == "feedToSnap" {
             let destination = segue.destination as? snap
             destination?.fullScreen = tempImage
+            
         }
     }
     /*

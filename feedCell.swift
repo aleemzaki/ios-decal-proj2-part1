@@ -15,5 +15,5 @@ class feedCell: UITableViewCell {
     @IBOutlet weak var senderNameLabel: UILabel!
     
     @IBOutlet weak var snapAgeLabel: UILabel!
-    
+    var read : Bool = false    //self.read.setBool(true)
 }

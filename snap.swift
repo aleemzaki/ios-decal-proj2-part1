@@ -34,4 +34,16 @@ class snap :UIViewController,UITableViewDelegate,UITableViewDataSource {
         
         return temp!
     }
+    
+    @objc(tableView:didSelectRowAtIndexPath:) func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        performSegue(withIdentifier: "snapToFeed", sender: nil)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        
+        if segue.identifier == "snapToFeed" {
+            //let destination = segue.destination as? feedController
+            //destination?.snapStatus = UIImage(named: "read")
+        }
+    }
 }
