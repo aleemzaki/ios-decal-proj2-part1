@@ -16,7 +16,7 @@ class feedController : UIViewController,UITableViewDelegate,UITableViewDataSourc
     }
     
     var inputIntoThisFeed = String()
-    
+    var tempImage = UIImage()
     
     override func viewDidLoad() {
         feedOutlet.dataSource = self
@@ -79,6 +79,47 @@ class feedController : UIViewController,UITableViewDelegate,UITableViewDataSourc
         
         return "clapAlong"
     }
+    var feedName = String()
+    @objc(tableView:didSelectRowAtIndexPath:) func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+       
+        
+        i = 0
+        for name in threads.keys {
+            if indexPath.section == i {
+                feedName = name
+            }
+            i = i + 1
+        }
+        
+        
+        //indexPath.section
+        //performSegue(withIdentifier: "filemenuToFeed", sender: nil)
+        tempImage = (threads[feedName]?[0])!
+        performSegue(withIdentifier: "feedToSnap", sender: nil)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        
+        if segue.identifier == "feedToSnap" {
+            let destination = segue.destination as? snap
+            destination?.fullScreen = tempImage
+        }
+    }
+    /*
+    func selectImage(_ image: UIImage) {
+        //The image being selected is passed in as "image".
+        
+        //selectedIndexPath = indexPath
+        chosenImage = image
+        performSegue(withIdentifier: "camToFileMenu", sender: nil)
+        
+    }
     
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        
+        if segue.identifier == "camToFileMenu" {
+            let destination = segue.destination as? fileMenuController
+            destination?.selectedImage = chosenImage
+        }
+    }
+    */
 }
